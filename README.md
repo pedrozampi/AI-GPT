@@ -1,6 +1,8 @@
-# IA-GPT - Repositório de Projetos (Monorepo)
+# IA-GPT - Inteligências Artificiais Generativas Aplicadas à Programação
 
-Este repositório está organizado como um **Monorepo** para centralizar todos os projetos, exercícios e aplicações desenvolvidas durante o curso, mantendo um único versionamento e uma única origem remota no GitHub.
+Este repositório agrupa os projetos em Python desenvolvidos durante o curso **"Inteligências Artificiais Generativas Aplicada a Programação"** do **SENAI**, cujo objetivo é capacitar e instruir sobre como utilizar corretamente as Inteligências Artificiais no desenvolvimento de software e programação.
+
+O repositório está organizado no formato de **Monorepo**, centralizando exercícios, aplicações e experimentos práticos com versionamento unificado.
 
 ---
 
@@ -8,14 +10,14 @@ Este repositório está organizado como um **Monorepo** para centralizar todos o
 
 ```text
 IA-GPT/
-├── base.md                  # System prompt e especificações base para IA
-├── README.md                # Visão geral e guia do repositório
-├── .gitignore               # Regras de exclusão (ambientes virtuais, caches, etc.)
-└── projetos/                # Diretório central de todos os projetos do curso
-    ├── 01-nome-do-projeto/  # Exemplo de pasta de projeto individual
-    │   ├── app.py           # Aplicação principal (ex: Streamlit)
+├── base.md                  # System prompt e especificações base para engenharia de prompt / IA
+├── README.md                # Visão geral, objetivo do curso e guia do repositório
+├── .gitignore               # Regras de exclusão para Python, Streamlit e ambientes virtuais
+└── projetos/                # Diretório central dos projetos práticos do curso
+    ├── 01-nome-do-projeto/  # Pasta individual de cada aplicação ou exercício
+    │   ├── app.py           # Código da aplicação (ex: Streamlit / scripts Python)
     │   ├── requirements.txt # Dependências específicas do projeto
-    │   └── README.md        # Documentação e instruções de execução daquele projeto
+    │   └── README.md        # Documentação e instruções daquele projeto
     └── ...
 ```
 
@@ -23,22 +25,22 @@ IA-GPT/
 
 ## 🛠️ Como Adicionar um Novo Projeto
 
-1. **Crie uma nova pasta dentro de `projetos/`:**
+1. **Crie a pasta do projeto dentro de `projetos/`:**
    ```bash
-   mkdir projetos/01-meu-primeiro-projeto
+   mkdir projetos/01-meu-projeto
    ```
 
-2. **Desenvolva seu código e defina as dependências:**
-   - Adicione seus arquivos (`app.py`, módulos, etc.).
-   - Recomenda-se salvar as dependências em um `requirements.txt` na própria pasta do projeto:
+2. **Desenvolva o código e defina as dependências:**
+   - Adicione seus scripts (`app.py`, módulos, etc.).
+   - Recomenda-se registrar as dependências em um arquivo `requirements.txt` na própria pasta do projeto:
      ```bash
-     pip freeze > projetos/01-meu-primeiro-projeto/requirements.txt
+     pip freeze > projetos/01-meu-projeto/requirements.txt
      ```
 
-3. **Submeta as alterações para o GitHub:**
+3. **Submeta as alterações para o repositório:**
    ```bash
    git add .
-   git commit -m "feat: adiciona projeto 01-meu-primeiro-projeto"
+   git commit -m "feat: adiciona projeto 01-meu-projeto"
    git push origin main
    ```
 
@@ -46,22 +48,26 @@ IA-GPT/
 
 ## 🚀 Como Executar um Projeto
 
-Navegue até a pasta do projeto desejado:
-```bash
-cd projetos/<nome-do-projeto>
-```
+1. Navegue até a pasta do projeto:
+   ```bash
+   cd projetos/<nome-do-projeto>
+   ```
 
-Crie e ative o ambiente virtual (opcional, mas recomendado):
-```bash
-# Windows
-python -m venv .venv
-.venv\Scripts\activate
+2. Crie e ative um ambiente virtual (recomendado):
+   ```bash
+   # Windows
+   python -m venv .venv
+   .venv\Scripts\activate
+   ```
 
-# Instale os pacotes necessários
-pip install -r requirements.txt
-```
+3. Instale os pacotes necessários:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Inicie a aplicação (por exemplo, Streamlit):
-```bash
-streamlit run app.py
-```
+4. Execute a aplicação (exemplo com Streamlit ou Python puro):
+   ```bash
+   streamlit run app.py
+   # ou
+   python main.py
+   ```
