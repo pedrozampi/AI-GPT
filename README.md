@@ -1,73 +1,67 @@
-# IA-GPT - Repositório Principal com Submódulos
+# IA-GPT - Repositório de Projetos (Monorepo)
 
-Este repositório está configurado para suportar **Git Submodules** (Submódulos do GitHub).
+Este repositório está organizado como um **Monorepo** para centralizar todos os projetos, exercícios e aplicações desenvolvidas durante o curso, mantendo um único versionamento e uma única origem remota no GitHub.
 
 ---
 
-## 📁 Estrutura do Projeto
+## 📁 Estrutura de Pastas
 
 ```text
 IA-GPT/
-├── .git/                 # Repositório Git principal
-├── .gitmodules           # Arquivo gerado automaticamente ao adicionar submódulos
-├── .gitignore            # Regras de exclusão para Python e ambiente local
-├── base.md               # Prompt base / especificações do projeto
-├── submodules/           # Diretório reservado para submódulos externos
-│   └── .gitkeep
-└── README.md             # Instruções de uso e comandos
+├── base.md                  # System prompt e especificações base para IA
+├── README.md                # Visão geral e guia do repositório
+├── .gitignore               # Regras de exclusão (ambientes virtuais, caches, etc.)
+└── projetos/                # Diretório central de todos os projetos do curso
+    ├── 01-nome-do-projeto/  # Exemplo de pasta de projeto individual
+    │   ├── app.py           # Aplicação principal (ex: Streamlit)
+    │   ├── requirements.txt # Dependências específicas do projeto
+    │   └── README.md        # Documentação e instruções de execução daquele projeto
+    └── ...
 ```
 
 ---
 
-## 🚀 Como Utilizar Submódulos
+## 🛠️ Como Adicionar um Novo Projeto
 
-### 1. Clonar este repositório com todos os submódulos
-Para clonar o projeto principal já trazendo todos os submódulos inicializados:
-```bash
-git clone --recurse-submodules <URL_DO_REPOSITORIO>
-```
+1. **Crie uma nova pasta dentro de `projetos/`:**
+   ```bash
+   mkdir projetos/01-meu-primeiro-projeto
+   ```
 
-Se o repositório já foi clonado sem a flag:
-```bash
-git submodule update --init --recursive
-```
+2. **Desenvolva seu código e defina as dependências:**
+   - Adicione seus arquivos (`app.py`, módulos, etc.).
+   - Recomenda-se salvar as dependências em um `requirements.txt` na própria pasta do projeto:
+     ```bash
+     pip freeze > projetos/01-meu-primeiro-projeto/requirements.txt
+     ```
 
----
-
-### 2. Adicionar um novo submódulo
-Para adicionar um repositório como submódulo dentro da pasta `submodules/`:
-```bash
-git submodule add <URL_DO_SUBMODULO> submodules/<nome-do-modulo>
-```
-
-Após executar, o Git criará automaticamente o arquivo `.gitmodules` e registrará o ponteiro para o commit do submódulo. Em seguida, comite a alteração:
-```bash
-git add .gitmodules submodules/<nome-do-modulo>
-git commit -m "Adiciona submódulo <nome-do-modulo>"
-```
+3. **Submeta as alterações para o GitHub:**
+   ```bash
+   git add .
+   git commit -m "feat: adiciona projeto 01-meu-primeiro-projeto"
+   git push origin main
+   ```
 
 ---
 
-### 3. Atualizar os submódulos
-Para atualizar todos os submódulos para os commits mais recentes das suas respectivas branches remotas:
+## 🚀 Como Executar um Projeto
+
+Navegue até a pasta do projeto desejado:
 ```bash
-git submodule update --remote --merge
+cd projetos/<nome-do-projeto>
 ```
 
----
-
-### 4. Remover um submódulo (se necessário)
-Caso queira remover um submódulo:
+Crie e ative o ambiente virtual (opcional, mas recomendado):
 ```bash
-# 1. Desinicializar
-git submodule deinit -f submodules/<nome-do-modulo>
+# Windows
+python -m venv .venv
+.venv\Scripts\activate
 
-# 2. Remover do índice e do disco
-git rm -f submodules/<nome-do-modulo>
+# Instale os pacotes necessários
+pip install -r requirements.txt
+```
 
-# 3. Limpar histórico interno do Git
-rm -rf .git/modules/submodules/<nome-do-modulo>
-
-# 4. Comitar a remoção
-git commit -m "Remove submódulo <nome-do-modulo>"
+Inicie a aplicação (por exemplo, Streamlit):
+```bash
+streamlit run app.py
 ```

@@ -8,17 +8,22 @@ build/
 dist/
 *.egg-info/
 
-# Virtual environments
+# Virtual environments (qualquer pasta/subpasta)
 .env
-.venv
+.env.*
+!.env.example
+.venv/
 env/
 venv/
 ENV/
 
-# Streamlit secrets and local configs
+# Streamlit secrets e configurações locais
 .streamlit/secrets.toml
 
-# Operating System and IDE files
+# Logs
+*.log
+
+# Arquivos de sistema e IDEs
 .vscode/
 .idea/
 Thumbs.db
