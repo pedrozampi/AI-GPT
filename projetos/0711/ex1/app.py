@@ -250,7 +250,7 @@ def main():
         )
         fig_time.update_traces(mode="lines+markers", fill="tozeroy")
         fig_time.update_layout(xaxis_title="Período", yaxis_title="Receita (€)", margin=dict(l=10, r=10, t=40, b=10))
-        st.plotly_chart(fig_time, use_container_width=True)
+        st.plotly_chart(fig_time, width="stretch")
 
     with row1_col2:
         st.subheader("🏷️ Receita por Produto")
@@ -274,7 +274,7 @@ def main():
             hover_data=["Unidades"],
         )
         fig_prod.update_layout(yaxis_title=None, margin=dict(l=10, r=10, t=40, b=10))
-        st.plotly_chart(fig_prod, use_container_width=True)
+        st.plotly_chart(fig_prod, width="stretch")
 
     # Linha 2: Distribuição Geográfica e Segmento de Venda
     row2_col1, row2_col2, row2_col3 = st.columns([1, 1, 1])
@@ -297,7 +297,7 @@ def main():
             color_discrete_sequence=["#43A047"],
         )
         fig_reg.update_layout(margin=dict(l=10, r=10, t=40, b=10))
-        st.plotly_chart(fig_reg, use_container_width=True)
+        st.plotly_chart(fig_reg, width="stretch")
 
     with row2_col2:
         st.subheader("📍 Faturamento por País")
@@ -317,7 +317,7 @@ def main():
             color_discrete_sequence=px.colors.qualitative.Pastel,
         )
         fig_country.update_layout(margin=dict(l=10, r=10, t=40, b=10))
-        st.plotly_chart(fig_country, use_container_width=True)
+        st.plotly_chart(fig_country, width="stretch")
 
     with row2_col3:
         st.subheader("🛒 Segmento do Cliente")
@@ -336,7 +336,7 @@ def main():
             color_discrete_sequence=["#FF7043", "#FFA726"],
         )
         fig_seg.update_layout(margin=dict(l=10, r=10, t=40, b=10))
-        st.plotly_chart(fig_seg, use_container_width=True)
+        st.plotly_chart(fig_seg, width="stretch")
 
     # Linha 3: Top Clientes
     st.subheader("⭐ Top 10 Clientes por Faturamento")
@@ -363,7 +363,7 @@ def main():
         hover_data=["country", "Qtd_Pedidos", "Total_Itens"],
     )
     fig_top_cust.update_layout(xaxis_title="Cliente", yaxis_title="Receita (€)", margin=dict(l=10, r=10, t=40, b=10))
-    st.plotly_chart(fig_top_cust, use_container_width=True)
+    st.plotly_chart(fig_top_cust, width="stretch")
 
     # ==============================================================================
     # TABELA DE DADOS DETALHADA E EXPORTAÇÃO
@@ -375,7 +375,7 @@ def main():
         ]
         st.dataframe(
             filtered_df[display_cols].sort_values(by="date", ascending=False),
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
         )
 
