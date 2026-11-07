@@ -84,6 +84,15 @@ def load_and_clean_data() -> pd.DataFrame:
     merged["segment"] = merged["segment"].fillna("Não Informado")
     merged["country"] = merged["country"].fillna("Não Informado")
 
+    # Mapeamento de códigos ISO-3 para renderização em mapas coropléticos
+    country_iso_map = {
+        "Portugal": "PRT",
+        "Spain": "ESP",
+        "Italy": "ITA",
+        "France": "FRA",
+    }
+    merged["iso_alpha"] = merged["country"].map(country_iso_map)
+
     return merged
 
 
@@ -338,7 +347,93 @@ def main():
         fig_seg.update_layout(margin=dict(l=10, r=10, t=40, b=10))
         st.plotly_chart(fig_seg, width="stretch")
 
-    # Linha 3: Top Clientes
+    # Linha 3: Mapa Geográfico de Clientes
+    st.markdown("---")
+    st.subheader("🗺️ Localização Geográfica dos Clientes")
+
+    map_col1, map_col2 = st.columns([1.6, 1])
+
+    with map_col1:
+        map_metric = st.radio(
+            "Visualizar no mapa por:",
+            options=["Quantidade de Clientes", "Faturamento Total (€)"],
+            horizontal=True,
+            help="Alterne entre volume de clientes cadastrados e faturamento total gerado por país.",
+        )
+
+        df_geo = (
+            filtered_df[filtered_df["iso_alpha"].notna()]
+            .groupby(["country", "iso_alpha"])
+            .agg(
+                Clientes=("customer_id", "nunique"),
+                Faturamento=("total_revenue", "sum"),
+                Pedidos=("order_id", "nunique"),
+                Itens=("units_sold", "sum"),
+            )
+            .reset_index()
+        )
+
+        if not df_geo.empty:
+            df_geo["Ticket Médio (€)"] = df_geo["Faturamento"] / df_geo["Pedidos"]
+            is_clients = map_metric == "Quantidade de Clientes"
+            target_metric = "Clientes" if is_clients else "Faturamento"
+            color_palette = "Blues" if is_clients else "Viridis"
+
+            fig_map = px.choropleth(
+                df_geo,
+                locations="iso_alpha",
+                color=target_metric,
+                hover_name="country",
+                hover_data={
+                    "iso_alpha": False,
+                    "Clientes": True,
+                    "Faturamento": ":.2f",
+                    "Pedidos": True,
+                    "Ticket Médio (€)": ":.2f",
+                },
+                scope="europe",
+                color_continuous_scale=color_palette,
+                title=f"Densidade por País — {map_metric}",
+                template="plotly_white",
+            )
+            fig_map.update_geos(
+                showcountries=True,
+                showcoastlines=True,
+                showland=True,
+                fitbounds="locations",
+                landcolor="#f8f9fa",
+                coastlinecolor="#cfd8dc",
+                countrycolor="#b0bec5",
+            )
+            fig_map.update_layout(
+                margin=dict(l=0, r=0, t=40, b=0),
+                height=430,
+            )
+            st.plotly_chart(fig_map, width="stretch")
+        else:
+            st.info("Nenhum dado geográfico disponível para os filtros atuais.")
+
+    with map_col2:
+        st.markdown("#### Detalhamento por País")
+        if not df_geo.empty:
+            st.dataframe(
+                df_geo[["country", "Clientes", "Pedidos", "Faturamento", "Ticket Médio (€)"]].rename(
+                    columns={"country": "País"}
+                ),
+                column_config={
+                    "Faturamento": st.column_config.NumberColumn("Faturamento", format="€ %.2f"),
+                    "Ticket Médio (€)": st.column_config.NumberColumn("Ticket Médio", format="€ %.2f"),
+                    "Clientes": st.column_config.NumberColumn("Clientes Únicos", format="%d"),
+                    "Pedidos": st.column_config.NumberColumn("Total de Pedidos", format="%d"),
+                },
+                width="stretch",
+                hide_index=True,
+                height=360,
+            )
+
+    st.markdown("---")
+
+    # Linha 4: Top Clientes
     st.subheader("⭐ Top 10 Clientes por Faturamento")
     df_top_cust = (
         filtered_df.groupby(["customer_id", "customer_name", "country", "segment"])

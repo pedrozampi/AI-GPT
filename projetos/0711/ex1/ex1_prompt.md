@@ -64,8 +64,11 @@ Apresentar no topo do dashboard:
 - **Distribuição Geográfica & Segmento:** 
   - Gráfico de barras/rosca comparando o faturamento por Região e por País.
   - Distribuição de vendas entre os canais (`Online` vs `Retail`).
+- **Mapa de Localização de Clientes:**
+  - Mapa coroplético interativo (`px.choropleth`) de distribuição dos clientes por país na Europa (Portugal, Espanha, Itália, França), permitindo alternar entre volume de clientes e faturamento total.
+  - Tabela lateral com detalhamento das métricas de cada país (clientes únicos, pedidos, receita e ticket médio).
 - **Top Clientes & Tabela de Dados Detalhada:**
-  - Tabela ou gráfico dos top 5 clientes por faturamento.
+  - Tabela ou gráfico dos top clientes por faturamento.
   - Aba expansível (`st.expander`) contendo o DataFrame final tratado com opção de download em CSV.
 
 ---
